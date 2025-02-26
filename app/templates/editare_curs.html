@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editare Curs</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Container pentru pagina de editare -->
+    <div class="container">
+        <!-- Header cu buton pentru întoarcere -->
+        <div class="header">
+            <a href="{{ url_for('routes.cursuri') }}" class="btn btn-home">
+                <i class="fas fa-arrow-left"></i> Înapoi la lista cursurilor
+            </a>
+            <h1>Editare Curs</h1>
+        </div>
+
+        <!-- Formular pentru editarea cursului -->
+        <form method="POST" action="{{ url_for('routes.actualizeaza_curs', id=curs.idcurs) }}" id="formular">
+            <div class="form-group">
+                <label for="numecurs">Nume Curs:</label>
+                <input type="text" id="numecurs" name="numecurs" value="{{ curs.numecurs }}" required>
+
+                <label for="ora">Oră:</label>
+                <input type="time" id="ora" name="ora" value="{{ curs.ora }}" required>
+
+                <label for="sala">Sală:</label>
+                <input type="text" id="sala" name="sala" value="{{ curs.sala }}" required>
+
+                <label for="idstudent">Student:</label>
+                <select id="idstudent" name="idstudent" required class="styled-dropdown">
+                    <option value="{{ curs.student.idstudent }}" selected>
+                        {{ curs.student.nume }} {{ curs.student.prenume }}
+                    </option>
+                    {% for student in studenti %}
+                    <option value="{{ student.idstudent }}">{{ student.nume }} {{ student.prenume }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="idprofesor">Profesor:</label>
+                <select id="idprofesor" name="idprofesor" required class="styled-dropdown">
+                    <option value="{{ curs.profesor.idprofesor }}" selected>
+                        {{ curs.profesor.nume }} {{ curs.profesor.prenume }}
+                    </option>
+                    {% for profesor in profesori %}
+                    <option value="{{ profesor.idprofesor }}">{{ profesor.nume }} {{ profesor.prenume }}</option>
+                    {% endfor %}
+                </select>
+
+                <button type="submit" class="btn btn-add">Actualizează Curs</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

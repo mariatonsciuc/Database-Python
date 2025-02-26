@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursuri</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        function toggleForm() {
+            const form = document.getElementById('formular');
+            if (form.style.display === 'none') {
+                form.style.display = 'block';
+            } else {
+                form.style.display = 'none';
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="{{ url_for('routes.index') }}" class="btn btn-home">
+                <i class="fas fa-home"></i> Acasă
+            </a>
+            <h1>Cursuri</h1>
+        </div>
+
+        <!-- Buton pentru adăugare curs -->
+        <div class="add-button">
+            <button class="btn btn-add" onclick="toggleForm()">
+                <i class="fas fa-book"></i> Adaugă Curs
+            </button>
+        </div>
+
+        <!-- Formular pentru adăugare curs, inițial ascuns -->
+        <form method="POST" action="{{ url_for('routes.adaugare_curs') }}" id="formular" style="display: none;">
+            <div class="form-group">
+                <label for="numecurs">Nume Curs:</label>
+                <input type="text" id="numecurs" name="numecurs" placeholder="Introduceți numele cursului" required>
+
+                <label for="ora">Oră:</label>
+                <input type="time" id="ora" name="ora" placeholder="Introduceți ora" required>
+
+                <label for="sala">Sală:</label>
+                <input type="text" id="sala" name="sala" placeholder="Introduceți sala" required>
+
+                <label for="idstudent">Student:</label>
+                <select name="idstudent" required>
+                    <option value="">Selectează Student</option>
+                    {% for student in studenti %}
+                    <option value="{{ student.idstudent }}">Nume: {{ student.nume }}, Prenume: {{ student.prenume }}, Vârstă: {{ student.varsta }}, Specializare: {{ student.specializare }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="idprofesor">Profesor:</label>
+                <select name="idprofesor" required>
+                    <option value="">Selectează Profesor</option>
+                    {% for profesor in profesori %}
+                    <option value="{{ profesor.idprofesor }}">Nume: {{ profesor.nume }}, Prenume: {{ profesor.prenume }}, Adresă: {{ profesor.adresa }}</option>
+                    {% endfor %}
+                </select>
+
+                <button type="submit" class="btn btn-add">Adaugă Curs</button>
+            </div>
+        </form>
+
+        <table class="curs-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nume Curs</th>
+                    <th>Oră</th>
+                    <th>Sală</th>
+                    <th>Nume student</th>
+                    <th>Prenume student</th>
+                    <th>Vârstă student</th>
+                    <th>Specializare student</th>
+                    <th>Nume profesor</th>
+                    <th>Prenume profesor</th>
+                    <th>Adresă profesor</th>
+                    <th>Acțiuni</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for curs in cursuri %}
+                <tr>
+                    <td>{{ curs.idcurs }}</td>
+                    <td>{{ curs.numecurs }}</td>
+                    <td>{{ curs.ora }}</td>
+                    <td>{{ curs.sala }}</td>
+                    <td>{{ curs.student.nume }}</td>
+                    <td>{{ curs.student.prenume }}</td>
+                    <td>{{ curs.student.varsta }}</td>  <!-- Afișează vârsta studentului -->
+                    <td>{{ curs.student.specializare }}</td>  <!-- Afișează specializarea studentului -->
+                    <td>{{ curs.profesor.nume }}</td>
+                    <td>{{ curs.profesor.prenume }}</td>
+                    <td>{{ curs.profesor.adresa }}</td>  <!-- Afișează adresa profesorului -->
+
+                    <td>
+                        <a href="{{ url_for('routes.editare_curs', id=curs.idcurs) }}" class="btn btn-edit">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a href="{{ url_for('routes.stergere_curs', id=curs.idcurs) }}" class="btn btn-delete">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+    </div>
+</body>
+</html>

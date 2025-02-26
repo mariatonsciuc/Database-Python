@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studenți</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        function toggleForm() {
+            const form = document.getElementById('formular');
+            if (form.style.display === 'none') {
+                form.style.display = 'block';
+            } else {
+                form.style.display = 'none';
+            }
+        }
+    </script>
+</head>
+<body>
+    <!-- Container pentru pagina studenților -->
+    <div class="container">
+        <!-- Buton pentru întoarcere acasă -->
+        <div class="header">
+            <a href="{{ url_for('routes.index') }}" class="btn btn-home">
+                <i class="fas fa-home"></i> Acasă
+            </a>
+            <h1>Studenți</h1>
+        </div>
+
+        <!-- Un singur buton pentru adăugare student -->
+        <div class="add-button">
+            <button class="btn btn-add" onclick="toggleForm()">
+                <i class="fas fa-user-plus"></i> Adaugă Student
+            </button>
+        </div>
+
+        <!-- Formular pentru adăugare student, inițial ascuns -->
+        <form method="POST" action="{{ url_for('routes.adaugare_student') }}" id="formular" style="display: none;">
+            <div class="form-group">
+                <label for="nume">Nume:</label>
+                <input type="text" id="nume" name="nume" placeholder="Introduceți numele studentului" required>
+
+                <label for="prenume">Prenume:</label>
+                <input type="text" id="prenume" name="prenume" placeholder="Introduceți prenumele studentului" required>
+
+                <label for="specializare">Specializare:</label>
+                <input type="text" id="specializare" name="specializare" placeholder="Ex: CTI, ELA" required>
+
+                <label for="varsta">Vârstă:</label>
+                <input type="number" id="varsta" name="varsta" placeholder="Introduceți vârsta studentului" required>
+
+                <button type="submit" class="btn btn-add">Adaugă Student</button>
+            </div>
+        </form>
+
+        <!-- Tabel pentru lista studenților -->
+        <table class="student-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nume</th>
+                    <th>Prenume</th>
+                    <th>Specializare</th>
+                    <th>Vârstă</th>
+                    <th>Acțiuni</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in studenti %}
+                <tr>
+                    <td>{{ student.idstudent }}</td>
+                    <td>{{ student.nume }}</td>
+                    <td>{{ student.prenume }}</td>
+                    <td>{{ student.specializare }}</td>
+                    <td>{{ student.varsta }} ani</td>
+                    <td>
+                        <a href="{{ url_for('routes.stergere_student', id=student.idstudent) }}" class="btn btn-delete">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                        <a href="{{ url_for('routes.editare_student', id=student.idstudent) }}" class="btn btn-edit">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

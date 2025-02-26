@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionare Date</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="background-image">
+
+        <!-- Butoane centralizate -->
+        <div class="buttons-container">
+            <a class="button" href="{{ url_for('routes.studenti') }}">Studenți</a>
+            <a class="button" href="{{ url_for('routes.profesori') }}">Profesori</a>
+            <a class="button" href="{{ url_for('routes.cursuri') }}">Cursuri</a>
+        </div>
+
+        <div class="content">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+</body>
+</html>

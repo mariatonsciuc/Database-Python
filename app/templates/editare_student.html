@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editare Student</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Container pentru pagina de editare -->
+    <div class="container">
+        <!-- Header cu buton pentru întoarcere -->
+        <div class="header">
+            <a href="{{ url_for('routes.studenti') }}" class="btn btn-home">
+                <i class="fas fa-arrow-left"></i> Înapoi la lista studenților
+            </a>
+            <h1>Editare Student</h1>
+        </div>
+
+        <!-- Formular pentru editarea studentului -->
+        <form method="POST" action="{{ url_for('routes.actualizeaza_student', id=student.idstudent) }}" id="formular">
+            <div class="form-group">
+                <label for="nume">Nume:</label>
+                <input type="text" id="nume" name="nume" value="{{ student.nume }}" required>
+
+                <label for="prenume">Prenume:</label>
+                <input type="text" id="prenume" name="prenume" value="{{ student.prenume }}" required>
+
+                <label for="specializare">Specializare:</label>
+                <input type="text" id="specializare" name="specializare" value="{{ student.specializare }}" required>
+
+                <label for="varsta">Vârstă:</label>
+                <input type="number" id="varsta" name="varsta" value="{{ student.varsta }}" required>
+
+                <button type="submit" class="btn btn-add">Actualizează Student</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

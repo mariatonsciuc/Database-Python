@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profesori</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        function toggleForm() {
+            const form = document.getElementById('formular');
+            if (form.style.display === 'none') {
+                form.style.display = 'block';
+            } else {
+                form.style.display = 'none';
+            }
+        }
+    </script>
+</head>
+<body>
+    <!-- Container pentru pagina profesorilor -->
+    <div class="container">
+        <!-- Header cu buton de întoarcere acasă -->
+        <div class="header">
+            <a href="{{ url_for('routes.index') }}" class="btn btn-home">
+                <i class="fas fa-home"></i> Acasă
+            </a>
+            <h1>Profesori</h1>
+        </div>
+
+        <!-- Buton pentru adăugare profesor -->
+        <div class="add-button">
+            <button class="btn btn-add" onclick="toggleForm()">
+                <i class="fas fa-user-plus"></i> Adaugă Profesor
+            </button>
+        </div>
+
+        <!-- Formular pentru adăugare profesor, inițial ascuns -->
+        <form method="POST" action="{{ url_for('routes.adaugare_profesor') }}" id="formular" style="display: none;">
+            <div class="form-group">
+                <label for="nume">Nume:</label>
+                <input type="text" id="nume" name="nume" placeholder="Introduceți numele profesorului" required>
+
+                <label for="prenume">Prenume:</label>
+                <input type="text" id="prenume" name="prenume" placeholder="Introduceți prenumele profesorului" required>
+
+                <label for="adresa">Adresă:</label>
+                <input type="text" id="adresa" name="adresa" placeholder="Introduceți adresa profesorului" required>
+
+                <button type="submit" class="btn btn-add">Adaugă Profesor</button>
+            </div>
+        </form>
+
+        <!-- Tabel pentru lista profesorilor -->
+        <table class="profesor-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nume</th>
+                    <th>Prenume</th>
+                    <th>Adresă</th>
+                    <th>Acțiuni</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for profesor in profesori %}
+                <tr>
+                    <td>{{ profesor.idprofesor }}</td>
+                    <td>{{ profesor.nume }}</td>
+                    <td>{{ profesor.prenume }}</td>
+                    <td>{{ profesor.adresa }}</td>
+                    <td>
+                        <a href="{{ url_for('routes.editare_profesor', id=profesor.idprofesor) }}" class="btn btn-edit">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a href="{{ url_for('routes.stergere_profesor', id=profesor.idprofesor) }}" class="btn btn-delete">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

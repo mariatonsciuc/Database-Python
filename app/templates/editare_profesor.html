@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editare Profesor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Container pentru pagina de editare -->
+    <div class="container">
+        <!-- Header cu titlu și buton de întoarcere -->
+        <div class="header">
+            <a href="{{ url_for('routes.profesori') }}" class="btn btn-home">
+                <i class="fas fa-arrow-left"></i> Înapoi la lista profesorilor
+            </a>
+            <h1>Editare Profesor</h1>
+        </div>
+
+        <!-- Formular pentru editarea profesorului -->
+        <form method="POST" action="{{ url_for('routes.actualizeaza_profesor', id=profesor.idprofesor) }}" class="form-group">
+            <label for="nume">Nume:</label>
+            <input type="text" id="nume" name="nume" value="{{ profesor.nume }}" required>
+
+            <label for="prenume">Prenume:</label>
+            <input type="text" id="prenume" name="prenume" value="{{ profesor.prenume }}" required>
+
+            <label for="adresa">Adresă:</label>
+            <input type="text" id="adresa" name="adresa" value="{{ profesor.adresa }}" required>
+
+            <button type="submit" class="btn btn-add">Actualizează Profesor</button>
+        </form>
+    </div>
+</body>
+</html>
